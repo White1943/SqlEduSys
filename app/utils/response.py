@@ -7,7 +7,7 @@ class ApiResponse:
             "status": "success",
             "message": message,
             "data": data
-        }), 200
+        }), 201
 
     @staticmethod
     def error(message="An error occurred", data=None, status_code=400):
