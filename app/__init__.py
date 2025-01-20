@@ -2,6 +2,8 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+
+from .LLM.views import sql_stu_bp
 from .config import Config
 
 db = SQLAlchemy()
@@ -17,6 +19,6 @@ def create_app():
     migrate.init_app(app, db)
     from .auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
-
+    app.register_blueprint(sql_stu_bp, url_prefix='/sql')
     return app
 # app\__init__.py

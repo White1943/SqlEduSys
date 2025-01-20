@@ -1,7 +1,6 @@
-# 处理身份验证路由
-# app/auth/views.py
-
 from flask import jsonify, request, Blueprint
+from flask_login import login_required
+from sqlalchemy.sql.functions import current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
 from . import auth_bp
@@ -19,7 +18,7 @@ def login():
     user = User.query.filter_by(username=username).first()
     if user and check_password_hash(user.password_hash, password):
 
-        return ApiResponse.success(data={"username": username}, message="Login successful")
+        return ApiResponse.success(data={"username": username, "is_admin":user.is_admin }, message="Login successful")
     else:
         return ApiResponse.error(message="Invalid username or password")
 
@@ -41,4 +40,41 @@ def register():
     db.session.commit()
     return ApiResponse.success(message="User registered successfully")
     # return jsonify({'message': 'User registered successfully'}), 201
+
+
+@login_required
+@auth_bp.route('/logout')
+def logout():
+    print(current_user.id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # app\auth\views.py
